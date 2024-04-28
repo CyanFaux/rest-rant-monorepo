@@ -13,9 +13,6 @@ router.post('/', async (req, res) => {
     if (!req.body.state) {
         req.body.state = 'USA'
     }
-    if (req.currentUser?.role !== 'admin') {
-        return res.status(403).json({ message: 'You are not allowed to create a place' })
-    }
     const place = await Place.create(req.body)
     res.json(place)
 })
@@ -63,9 +60,6 @@ router.put('/:placeId', async (req, res) => {
             res.json(place)
         }
     }
-    if (req.currentUser?.role !== 'admin') {
-        return res.status(403).json({ message: 'You are not allowed to edit places' })
-    }
 })
 
 router.delete('/:placeId', async (req, res) => {
@@ -84,9 +78,6 @@ router.delete('/:placeId', async (req, res) => {
             await place.destroy()
             res.json(place)
         }
-    }
-    if (req.currentUser?.role !== 'admin') {
-        return res.status(403).json({ message: 'You are not allowed to delete places' })
     }
 })
 
